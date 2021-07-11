@@ -91,7 +91,10 @@ app.get(
   '/posts/:id',
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const post = await Post.findById(id).populate('comments');
+    const post = await Post.findById(id).populate({
+      path: 'comments',
+      populate: { path: 'author' },
+    });
     res.render('posts/show', { post });
   })
 );
@@ -150,11 +153,19 @@ app.get('/register', (req, res) => {
 app.post(
   '/register',
   catchAsync(async (req, res) => {
-    const { username, password } = req.body;
-    const user = await new User({ username });
-    const registeredUser = await User.register(user, password);
-    console.log('registered');
-    res.redirect('/posts');
+    try {
+      const { username, password } = req.body;
+      const user = await new User({ username });
+      const registeredUser = await User.register(user, password);
+      req.login(registeredUser, err => {
+        if (err) return next(err);
+        res.redirect('/posts');
+      });
+      console.log('registered');
+    } catch (e) {
+      console.log(e);
+      res.redirect('/register');
+    }
   })
 );
 
@@ -162,14 +173,10 @@ app.get('/login', (req, res) => {
   res.render('users/login');
 });
 
-app.post(
-  '/login',
-  passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }),
-  (req, res) => {
-    console.log('logged in');
-    res.redirect('/posts');
-  }
-);
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+  console.log('logged in');
+  res.redirect('/posts');
+});
 
 app.get('/logout', (req, res) => {
   req.logout();
@@ -186,7 +193,7 @@ app.all('*', (req, res, next) => {
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = 'Oh no, something went wrong';
-  res.status(statusCode).send(`error ${statusCode}`);
+  res.status(statusCode).send(`error ${statusCode} - ${err.message}`);
 });
 
 app.listen(5000, () => {

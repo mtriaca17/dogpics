@@ -14,10 +14,13 @@
       <p><%= post.description %></p>
     </div>
 
+    <% if(currentUser && post.author.equals(currentUser._id)) { %>
     <a href="/posts/<%= post._id %>/edit">edit this</a>
     <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
       <button>Delete</button>
     </form>
+
+    <% } %> <% if(currentUser) { %>
     <form action="/posts/<%= post._id %>/comments" method="POST">
       <div>
         <label for="comment">Comment: </label>
@@ -25,17 +28,21 @@
       </div>
       <button>Submit Comment</button>
     </form>
+    <% } %>
 
     <div>
       <% for(let comment of post.comments ) { %>
       <div>
+        <h3><%= comment.author.username %></h3>
         <p><%= comment.body %></p>
+        <% if(currentUser && comment.author.equals(currentUser._id)) { %>
         <form
           action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE"
           method="POST"
         >
           <button>Delete comment</button>
         </form>
+        <% } %>
       </div>
       <% } %>
     </div>
