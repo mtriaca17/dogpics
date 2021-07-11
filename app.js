@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
 const session = require('express-session');
 
 const passport = require('passport');
@@ -28,6 +29,7 @@ const app = express();
 
 app.use(methodOverride('_method'));
 
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
