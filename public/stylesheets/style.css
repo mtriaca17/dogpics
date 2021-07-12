@@ -1,7 +1,20 @@
+html {
+  height: 100%;
+}
+body {
+  min-height: 100vh;
+}
 .comment-box {
   border: 1px solid #c1c1c1;
 }
 
+/* .footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 5rem;
+} */
 @media (min-width: 769px) {
   .index-box {
     transition: all 0.2s ease-in-out;
@@ -9,5 +22,15 @@
 
   .index-box:hover {
     transform: scale(1.05);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin-bottom: 150px;
+  }
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 }

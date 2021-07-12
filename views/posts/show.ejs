@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %>
-<div class="container mt-5">
-  <div class="columns is-centered">
+<div class="container my-5">
+  <div class="columns is-centered is-marginless">
     <div class="column is-three-fifths">
       <div class="card has-text-centered">
         <div class="card-content">
@@ -29,8 +29,8 @@
       </div>
     </div>
     <div class="column">
+      <% if(currentUser) { %>
       <div class="box">
-        <% if(currentUser) { %>
         <form action="/posts/<%= post._id %>/comments" method="POST" class="form mb-3">
           <div class="field">
             <label for="comment">Comment: </label>
@@ -46,10 +46,9 @@
           </div>
           <button class="button is-info is-outlined">Submit Comment</button>
         </form>
-        <% } %>
       </div>
+      <% } %>
 
-      <div></div>
       <div class="box">
         <p class="is-size-5">Comments:</p>
         <% for(let comment of post.comments ) { %>
