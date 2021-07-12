@@ -29,23 +29,25 @@
       </div>
     </div>
     <div class="column">
-      <% if(currentUser) { %>
-      <form action="/posts/<%= post._id %>/comments" method="POST" class="form mb-3">
-        <div class="field">
-          <label for="comment">Comment: </label>
-          <div class="control">
-            <textarea
-              name="comment[body]"
-              id="comment"
-              cols="10"
-              rows="2"
-              class="textarea"
-            ></textarea>
+      <div class="box">
+        <% if(currentUser) { %>
+        <form action="/posts/<%= post._id %>/comments" method="POST" class="form mb-3">
+          <div class="field">
+            <label for="comment">Comment: </label>
+            <div class="control">
+              <textarea
+                name="comment[body]"
+                id="comment"
+                cols="10"
+                rows="2"
+                class="textarea"
+              ></textarea>
+            </div>
           </div>
-        </div>
-        <button class="button is-info is-outlined">Submit Comment</button>
-      </form>
-      <% } %>
+          <button class="button is-info is-outlined">Submit Comment</button>
+        </form>
+        <% } %>
+      </div>
 
       <div></div>
       <div class="box">

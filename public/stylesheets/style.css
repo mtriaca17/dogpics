@@ -2,10 +2,12 @@
   border: 1px solid #c1c1c1;
 }
 
-.index-box {
-  transition: all 0.2s ease-in-out;
-}
+@media (min-width: 769px) {
+  .index-box {
+    transition: all 0.2s ease-in-out;
+  }
 
-.index-box:hover {
-  transform: scale(1.05);
+  .index-box:hover {
+    transform: scale(1.05);
+  }
 }

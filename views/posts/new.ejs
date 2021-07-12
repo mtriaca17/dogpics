@@ -1,17 +1,37 @@
 <% layout('layouts/boilerplate') %>
-<h1>Creating a new Post</h1>
-<form action="/posts" method="POST">
-  <div>
-    <label for="title">Title</label>
-    <input type="text" name="post[title]" id="title" />
+<div class="container">
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="box">
+        <h1 class="title">New Post</h1>
+        <form action="/posts" method="POST">
+          <div class="field">
+            <label for="title">Title:</label>
+            <div class="control">
+              <input type="text" name="post[title]" id="title" class="input" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="image">Image URL: </label>
+            <div class="control">
+              <input type="text" name="post[image]" id="image" class="input" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="description">Description: </label>
+            <div class="control">
+              <textarea
+                name="post[description]"
+                id="description"
+                cols="30"
+                rows="3"
+                class="textarea"
+              ></textarea>
+            </div>
+          </div>
+          <button class="button is-primary is-fullwidth">Post</button>
+        </form>
+      </div>
+    </div>
   </div>
-  <div>
-    <label for="image">Image</label>
-    <input type="text" name="post[image]" id="image" />
-  </div>
-  <div>
-    <label for="description">Description</label>
-    <textarea name="post[description]" id="description" cols="30" rows="10"></textarea>
-  </div>
-  <button>Post</button>
-</form>
+</div>
