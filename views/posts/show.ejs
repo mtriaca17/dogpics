@@ -1,37 +1,70 @@
 <% layout('layouts/boilerplate') %>
+<div class="container mt-5">
+  <div class="columns is-centered">
+    <div class="column is-three-fifths">
+      <div class="card has-text-centered">
+        <div class="card-content">
+          <p class="title"><%= post.title %></p>
+          <p class="subtitle">posted by <%= post.author.username %></p>
+          <div class="card-image">
+            <img src="<%=post.image%>" alt="" />
+          </div>
+        </div>
+        <div class="card-content">
+          <p><%= post.description %></p>
+        </div>
+        <div class="card-content">
+          <% if(currentUser && post.author.equals(currentUser._id)) { %>
+          <div class="field is-grouped is-justify-content-center">
+            <a href="/posts/<%= post._id %>/edit" class="button is-primary is-outlined mr-3"
+              >Edit Post</a
+            >
+            <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+              <button class="button is-danger is-outlined">Delete Post</button>
+            </form>
+          </div>
 
-<div>
-  <h3><%= post.title %></h3>
-  <img src="<%=post.image%>" alt="" />
-  <p><%= post.description %></p>
-</div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <% if(currentUser) { %>
+      <form action="/posts/<%= post._id %>/comments" method="POST" class="form mb-3">
+        <div class="field">
+          <label for="comment">Comment: </label>
+          <div class="control">
+            <textarea
+              name="comment[body]"
+              id="comment"
+              cols="10"
+              rows="2"
+              class="textarea"
+            ></textarea>
+          </div>
+        </div>
+        <button class="button is-info is-outlined">Submit Comment</button>
+      </form>
+      <% } %>
 
-<% if(currentUser && post.author.equals(currentUser._id)) { %>
-<a href="/posts/<%= post._id %>/edit">edit this</a>
-<form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-  <button>Delete</button>
-</form>
-
-<% } %> <% if(currentUser) { %>
-<form action="/posts/<%= post._id %>/comments" method="POST">
-  <div>
-    <label for="comment">Comment: </label>
-    <textarea name="comment[body]" id="comment" cols="30" rows="2"></textarea>
+      <div></div>
+      <div class="box">
+        <p class="is-size-5">Comments:</p>
+        <% for(let comment of post.comments ) { %>
+        <div class="box is-shadowless comment-box">
+          <p class="is-size-5"><%= comment.body %></p>
+          <p>- <%= comment.author.username %></p>
+          <% if(currentUser && comment.author.equals(currentUser._id)) { %>
+          <form
+            action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="button is-small is-danger is-outlined mt-3">Delete comment</button>
+          </form>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+    </div>
   </div>
-  <button>Submit Comment</button>
-</form>
-<% } %>
-
-<div>
-  <% for(let comment of post.comments ) { %>
-  <div>
-    <h3><%= comment.author.username %></h3>
-    <p><%= comment.body %></p>
-    <% if(currentUser && comment.author.equals(currentUser._id)) { %>
-    <form action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-      <button>Delete comment</button>
-    </form>
-    <% } %>
-  </div>
-  <% } %>
 </div>

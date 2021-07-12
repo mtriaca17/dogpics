@@ -93,10 +93,12 @@ app.get(
   '/posts/:id',
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const post = await Post.findById(id).populate({
-      path: 'comments',
-      populate: { path: 'author' },
-    });
+    const post = await Post.findById(id)
+      .populate({
+        path: 'comments',
+        populate: { path: 'author' },
+      })
+      .populate('author');
     res.render('posts/show', { post });
   })
 );

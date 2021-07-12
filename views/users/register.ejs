@@ -1,13 +1,26 @@
 <% layout('layouts/boilerplate') %>
-<form action="/register" method="POST">
-  <div>
-    <h1>Register for an account!</h1>
-    <label for="username">Username: </label>
-    <input type="text" name="username" id="username" />
+
+<div class="container">
+  <div class="columns is-centered">
+    <div class="column is-one-quarter">
+      <div class="box">
+        <h1 class="title">Register for an account</h1>
+        <form action="/register" method="POST">
+          <div class="field">
+            <label for="username">Username: </label>
+            <div class="control">
+              <input type="text" name="username" id="username" class="input" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="password">Password: </label>
+            <div class="control">
+              <input type="password" name="password" id="password" class="input" />
+            </div>
+          </div>
+          <button class="button is-primary is-fullwidth">Register</button>
+        </form>
+      </div>
+    </div>
   </div>
-  <div>
-    <label for="password">Password: </label>
-    <input type="password" name="password" id="password" />
-  </div>
-  <button>Register</button>
-</form>
+</div>
