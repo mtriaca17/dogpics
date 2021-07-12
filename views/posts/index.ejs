@@ -1,15 +1,56 @@
 <% layout('layouts/boilerplate') %>
-<h1>ALL THE POSTS!</h1>
 
-<% if(!currentUser) { %>
-<a href="/register">Register</a>
-<a href="/login">Login</a>
-<% } else { %>
-<a href="/logout">logout</a>
-<% }%>
+<!-- <div class="container is-fluid pt-5">
+  <div class="columns is-multiline">
+    <% for( let post of posts ) { %>
+    <div class="column is-one-quarter">
+      <div class="block card">
+        <div class="card-header">
+          <div class="card-header-title"><%= post.title %></div>
+        </div>
+        <div class="media-content">
+          <div class="card-image">
+            <figure class="image is-130x130">
+              <img src="<%= post.image %>" alt="" />
+            </figure>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="/posts/<%=post._id%>" class="card-footer-item">View Full Post!</a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div> -->
+<!-- <div class="container">
+  <div class="tile is-ancestor mt-5 if-flex-wrap-wrap">
+    <div class="tile is-parent is-12">
+      <% for( let post of posts ) { %>
+      <div class="tile is-child box is-4">
+        <h4 class="title is-4"><%= post.title %></h4>
+        <figure class="image is-130x130">
+          <img src="<%= post.image %>" class="is-rounded" alt="" />
+        </figure>
+        <a href="/posts/<%=post._id%>" class="card-footer-item">View Full Post!</a>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div> -->
 
-<a href="/posts/new">New post</a>
-<% for( let post of posts ) { %>
-<p><%= post %></p>
-<a href="/posts/<%=post._id%>">view</a>
-<% } %>
+<div class="container">
+  <div class="columns is-multiline mt-5">
+    <% for( let post of posts ) { %>
+    <div class="column block is-one-third">
+      <div class="box has-text-centered">
+        <h4 class="title"><%= post.title %></h4>
+        <figure class="image"></figure>
+          <img src="<%= post.image %>" class="is-rounded" alt="" />
+        </figure>
+        <a href="/posts/<%=post._id%>" class="card-footer-item">View Full Post!</a>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>
