@@ -1,0 +1,27 @@
+<% layout('layouts/boilerplate') %>
+<div class="container">
+  <h1 class="title is-size-3 is-align-self-flex-start is-centered">
+    <%= user.username %>'s Profile
+  </h1>
+
+  <div class="box">
+    <div class="columns is-centered is-multiline">
+      <div class="column is-full">
+        <p class="is-size-5"><%= user.username %>'s posts (Total: <%= totalPosts %> )</p>
+      </div>
+      <% for(let post of posts) { %>
+        <div class="column is-one-quarter">
+          <a href="/posts/<%=post._id%>">
+            <p class="has-text-black"><%= post.title %></p>
+            <figure class="image">
+              <img src="<%= post.image %>" alt="" />
+            </figure>
+          </a>
+        </div>
+      
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -11,6 +11,8 @@ const pics = [
   'https://images.dog.ceo/breeds/mountain-bernese/n02107683_5363.jpg',
   'https://images.dog.ceo/breeds/pinscher-miniature/n02107312_3603.jpg',
   'https://images.dog.ceo/breeds/terrier-westhighland/n02098286_839.jpg',
+  'https://images.dog.ceo/breeds/eskimo/n02109961_21096.jpg',
+  'https://images.dog.ceo/breeds/terrier-dandie/n02096437_4466.jpg',
 ];
 
 module.exports = pics;

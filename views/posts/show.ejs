@@ -5,7 +5,9 @@
       <div class="card has-text-centered">
         <div class="card-content">
           <p class="title"><%= post.title %></p>
-          <p class="subtitle">posted by <%= post.author.username %></p>
+          <p class="subtitle">
+            posted by <a href="/users/<%= post.author._id %>"><%= post.author.username %></a>
+          </p>
           <div class="card-image">
             <img src="<%=post.image%>" alt="" />
           </div>

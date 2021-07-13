@@ -41,6 +41,7 @@
         <% } else { %>
         <p class="navbar-item is-hidden-mobile">Hello <%= currentUser.username %>!</p>
         <div class="buttons">
+          <a href="/users/<%= currentUser._id %>" class="button is-light">View your profile</a>
           <a href="/logout" class="button is-light"> Log Out </a>
         </div>
         <% } %>

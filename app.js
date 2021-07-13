@@ -188,6 +188,17 @@ app.post(
   })
 );
 
+app.get(
+  '/users/:id',
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    const posts = await Post.find({ author: id }).sort({ createdAt: -1 });
+    const totalPosts = await Post.countDocuments({ author: id });
+    res.render('users/profile', { user, posts, totalPosts });
+  })
+);
+
 app.get('/login', (req, res) => {
   res.render('users/login');
 });
