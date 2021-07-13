@@ -64,7 +64,7 @@ app.use((req, res, next) => {
 
 //posts routes
 app.get('/', (req, res) => {
-  res.send('HELLO!');
+  res.render('home');
 });
 
 app.get(

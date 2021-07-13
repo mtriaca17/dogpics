@@ -13,6 +13,7 @@ const pics = [
   'https://images.dog.ceo/breeds/terrier-westhighland/n02098286_839.jpg',
   'https://images.dog.ceo/breeds/eskimo/n02109961_21096.jpg',
   'https://images.dog.ceo/breeds/terrier-dandie/n02096437_4466.jpg',
+  'https://images.dog.ceo/breeds/pembroke/n02113023_1825.jpg',
 ];
 
 module.exports = pics;

@@ -1,6 +1,7 @@
 const postBox = document.querySelector('#post-box');
 // const baseUrl = 'http://localhost:5005/api/posts';
 const baseUrl = '/api/posts';
+let readyForRequest = true;
 let page = 2;
 const size = 6;
 
@@ -8,6 +9,7 @@ async function getData() {
   try {
     const res = await fetch(`${baseUrl}?page=${page}&size=${size}`);
     const data = await res.json();
+    console.log(data);
     if (data.data.length < 1) return;
     appendToPage(data);
     page++;
@@ -18,7 +20,6 @@ async function getData() {
 
 function appendToPage(data) {
   data.data.forEach(post => {
-    console.log(post);
     const markup = `<div class="box has-text-centered index-box">
     <a href="/posts/${post._id}">
       <h4 class="title">${post.title}</h4>
@@ -34,10 +35,12 @@ function appendToPage(data) {
     console.log(newPost);
     postBox.append(newPost);
   });
+  readyForRequest = true;
 }
 
 window.addEventListener('scroll', e => {
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2) {
+    readyForRequest = false;
     getData();
   }
 });

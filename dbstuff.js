@@ -11,8 +11,14 @@ mongoose
   .catch(e => console.log(e));
 mongoose.set('useFindAndModify', false);
 
+const timer = ms => new Promise(res => setTimeout(res, ms));
 const makeUpdates = async () => {
-  await Post.updateMany({}, { createdAt: new Date() });
+  const posts = await Post.find();
+  for (let post of posts) {
+    post.createdAt = new Date();
+    post.save();
+    await timer(50);
+  }
 };
 
 makeUpdates()
