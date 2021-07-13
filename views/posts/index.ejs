@@ -1,19 +1,20 @@
 <% layout('layouts/boilerplate') %>
-<div class="container my-10">
-  <div class="columns is-multiline ">
+<div class="container my-10" id="container">
+  <div class="columns is-multiline" id="post-box">
     <% for( let post of posts ) { %>
-    <a href="/posts/<%=post._id%>">
-      <div class="column block is-one-third">
-        <div class="box has-text-centered index-box">
+    <div class="column block is-one-third">
+      <div class="box has-text-centered index-box">
+        <a href="/posts/<%=post._id%>">
           <h4 class="title"><%= post.title %></h4>
-          <figure class="image"></figure>
-            <img src="<%= post.image %>" class="is-rounded" alt="" />
+          <figure class="image">
+            <img src="<%= post.image %>" alt="" />
           </figure>
-          <a href="/posts/<%=post._id%>" class="card-footer-item">View Full Post!</a>
-        </div>
+        </a>
+        <a href="/posts/<%=post._id%>" class="card-footer-item">View Full Post!</a>
       </div>
-    </a>
-  
+    </div>
     <% } %>
   </div>
 </div>
+
+<script src="/js/indexInfiniteScroll.js"></script>

@@ -10,6 +10,7 @@ const PostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  createdAt: Date,
 });
 
 PostSchema.post('findOneAndDelete', async function (doc) {

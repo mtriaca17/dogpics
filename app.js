@@ -70,8 +70,22 @@ app.get('/', (req, res) => {
 app.get(
   '/posts',
   catchAsync(async (req, res) => {
-    const posts = await Post.find({});
+    const posts = await Post.find({}).limit(6).sort({ createdAt: -1 });
     res.render('posts/index', { posts });
+  })
+);
+
+app.get(
+  '/api/posts',
+  catchAsync(async (req, res) => {
+    let { page = 1, size = 10 } = req.query;
+
+    const limit = parseInt(size);
+    const skip = (page - 1) * size; //skip how many documents based on how many pages have already been sent
+    // const posts = await Post.find({}, {}, { limit, skip });
+    const posts = await Post.find().limit(limit).skip(skip).sort({ createdAt: -1 });
+    const obj = { page, size, data: posts };
+    res.json(obj);
   })
 );
 
@@ -84,6 +98,7 @@ app.post(
   catchAsync(async (req, res) => {
     const post = new Post(req.body.post);
     post.author = req.user._id;
+    post.createdAt = new Date();
     await post.save();
     res.redirect('/posts');
   })
