@@ -1,11 +1,24 @@
 <% if(success && success.length) { %>
-<div class="notification is-success">
-  <button class="delete"></button>
-  <%= success %>
+<div class="container">
+  <div class="columns is-centered mb-5">
+    <div class="column is-half">
+      <div class="notification is-success has-background-success-light has-text-black-ter">
+        <button class="delete"></button>
+        <%= success %>
+      </div>
+    </div>
+  </div>
 </div>
+
 <% } %> <% if(error && error.length) { %>
-<div class="notification is-danger">
-  <button class="delete"></button>
-  <%= error %>
+<div class="container">
+  <div class="columns is-centered mb-5">
+    <div class="column is-half">
+      <div class="notification is-danger has-background-danger-light has-text-black-ter">
+        <button class="delete"></button>
+        <%= error %>
+      </div>
+    </div>
+  </div>
 </div>
 <% } %>

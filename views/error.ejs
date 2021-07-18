@@ -1,0 +1,11 @@
+<% layout('layouts/boilerplate') %>
+<div class="columns is-centered">
+  <div class="column is-half">
+    <div class="box has-text-centered error is-shadowless" role="alert">
+      <h4 class="has-text-danger title"><%= err.statusCode %> - <%= err.message %></h4>
+      <% if(process.env.NODE_ENV !== 'production') {%>
+      <p><%= err.stack %></p>
+      <% } %>
+    </div>
+  </div>
+</div>

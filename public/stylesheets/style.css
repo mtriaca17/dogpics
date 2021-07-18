@@ -37,3 +37,7 @@ body {
     overflow-x: hidden;
   }
 }
+
+.error {
+  border: 1px solid hsl(348, 86%, 43%);
+}
