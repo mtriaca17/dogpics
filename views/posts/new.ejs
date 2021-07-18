@@ -4,18 +4,24 @@
     <div class="column is-half">
       <div class="box">
         <h1 class="title">New Post</h1>
-        <form action="/posts" method="POST" class="validate-form">
+        <form action="/posts" method="POST" class="validate-form-new">
           <div class="field">
             <label for="title">Title:</label>
             <div class="control">
-              <input type="text" name="post[title]" id="title" class="input" required />
+              <input type="text" name="post[title]" id="title" class="input title-input" required />
             </div>
+            <p class="validation-text help is-danger" style="display: none">
+              This Field is required
+            </p>
           </div>
           <div class="field">
             <label for="image">Image URL: </label>
             <div class="control">
-              <input type="text" name="post[image]" id="image" class="input" required />
+              <input type="text" name="post[image]" id="image" class="input url-input" required />
             </div>
+            <p class="validation-text help is-danger" style="display: none">
+              This Field is required
+            </p>
           </div>
           <div class="field">
             <label for="description">Description: </label>
@@ -25,10 +31,13 @@
                 id="description"
                 cols="30"
                 rows="3"
-                class="textarea"
+                class="textarea description-input"
                 required
               ></textarea>
             </div>
+            <p class="validation-text help is-danger" style="display: none">
+              This Field is required
+            </p>
           </div>
           <button class="button is-primary is-fullwidth">Post</button>
         </form>
