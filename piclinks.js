@@ -15,6 +15,7 @@ const pics = [
   'https://images.dog.ceo/breeds/terrier-dandie/n02096437_4466.jpg',
   'https://images.dog.ceo/breeds/pembroke/n02113023_1825.jpg',
   'https://images.dog.ceo/breeds/poodle-toy/n02113624_213.jpg',
+  'https://images.dog.ceo/breeds/frise-bichon/1.jpg',
 ];
 
 module.exports = pics;

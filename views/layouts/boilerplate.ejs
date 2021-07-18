@@ -10,8 +10,9 @@
   </head>
   <body class="is-flex is-flex-direction-column is-justify-content-space-between">
     <%- include('../partials/navbar') %>
-    <main><%- body %></main>
+    <main><%- include('../partials/flash') %><%- body %></main>
     <%- include('../partials/footer') %>
     <script src="/js/scripts.js"></script>
+    <script src="/js/formValidation.js"></script>
   </body>
 </html>

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const flash = require('connect-flash');
 
 const passport = require('passport');
 const localStrategy = require('passport-local');
@@ -15,6 +16,7 @@ const User = require('./models/user');
 const catchAsync = require('./utils/catchAsync');
 const AppError = require('./utils/AppError');
 
+const { postSchema, commentSchema } = require('./schemaValidations');
 mongoose
   .connect('mongodb://localhost:27017/dogPics', {
     useNewUrlParser: true,
@@ -49,7 +51,7 @@ const sessionConfig = {
 };
 
 app.use(session(sessionConfig));
-
+app.use(flash());
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -59,6 +61,59 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  next();
+});
+
+//middleware for logged in users
+const isLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    req.session.returnTo = req.originalUrl;
+    console.log(req.session.returnTo);
+    return res.redirect('/login');
+  }
+  next();
+};
+
+//middleware for checking post and comment authors
+const isPostAuthor = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const post = await Post.findById(id);
+  if (!post.author.equals(req.user._id)) {
+    return res.redirect(`/posts/${id}`);
+  }
+  next();
+});
+
+//middleware for validations
+
+const validatePost = (req, res, next) => {
+  const { error } = postSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(', ');
+    throw new AppError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+const validateComment = (req, res, next) => {
+  const { error } = commentSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(', ');
+    throw new AppError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+const isCommentAuthor = catchAsync(async (req, res, next) => {
+  const { id, commentId } = req.params;
+  const comment = await Comment.findById(commentId);
+  if (!comment.author.equals(req.user._id)) {
+    return res.redirect(`/posts/${id}`);
+  }
   next();
 });
 
@@ -89,17 +144,20 @@ app.get(
   })
 );
 
-app.get('/posts/new', (req, res) => {
+app.get('/posts/new', isLoggedIn, (req, res) => {
   res.render('posts/new');
 });
 
 app.post(
   '/posts',
+  isLoggedIn,
+  validatePost,
   catchAsync(async (req, res) => {
     const post = new Post(req.body.post);
     post.author = req.user._id;
     post.createdAt = new Date();
     await post.save();
+    req.flash('success', 'Post Created Successfully!');
     res.redirect('/posts');
   })
 );
@@ -129,38 +187,52 @@ app.get(
 
 app.put(
   '/posts/:id',
+  isLoggedIn,
+  isPostAuthor,
+  validatePost,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const post = await Post.findByIdAndUpdate(id, { ...req.body.post });
+    req.flash('success', 'Post Edited Successfully!');
     res.redirect(`/posts/${id}`);
   })
 );
 
 app.delete(
   '/posts/:id',
+  isLoggedIn,
+  isPostAuthor,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     await Post.findByIdAndDelete(id);
+    req.flash('success', 'Post Deleted');
     res.redirect('/posts');
   })
 );
 
 //comments routes
-app.post('/posts/:id/comments', async (req, res) => {
-  const { id } = req.params;
-  const post = await Post.findById(id);
-  const comment = new Comment(req.body.comment);
-  comment.author = req.user._id;
-  post.comments.push(comment);
-  await comment.save();
-  await post.save();
-  res.redirect(`/posts/${post._id}`);
-});
+app.post(
+  '/posts/:id/comments',
+  isLoggedIn,
+  validateComment,
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const post = await Post.findById(id);
+    const comment = new Comment(req.body.comment);
+    comment.author = req.user._id;
+    post.comments.push(comment);
+    await comment.save();
+    await post.save();
+    req.flash('success', 'Commented Successfully!');
+    res.redirect(`/posts/${post._id}`);
+  })
+);
 
-app.delete('/posts/:id/comments/:commentId', async (req, res) => {
+app.delete('/posts/:id/comments/:commentId', isLoggedIn, isCommentAuthor, async (req, res) => {
   const { id, commentId } = req.params;
   await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } });
   await Comment.findByIdAndDelete(commentId);
+  req.flash('success', 'Comment Deleted');
   res.redirect(`/posts/${id}`);
 });
 
@@ -178,11 +250,12 @@ app.post(
       const registeredUser = await User.register(user, password);
       req.login(registeredUser, err => {
         if (err) return next(err);
+        req.flash('success', 'Welcome to dogpics!');
         res.redirect('/posts');
       });
-      console.log('registered');
+      // console.log('registered');
     } catch (e) {
-      console.log(e);
+      req.flash('error', e.message);
       res.redirect('/register');
     }
   })
@@ -203,14 +276,20 @@ app.get('/login', (req, res) => {
   res.render('users/login');
 });
 
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
-  console.log('logged in');
-  res.redirect('/posts');
-});
+app.post(
+  '/login',
+  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+  (req, res) => {
+    req.flash('success', 'Welcome Back!');
+    const redirectUrl = req.session.returnTo || '/posts';
+    delete req.session.returnTo;
+    res.redirect(redirectUrl);
+  }
+);
 
 app.get('/logout', (req, res) => {
   req.logout();
-  console.log('logged out');
+  req.flash('success', 'Logged Out');
   res.redirect('/posts');
 });
 

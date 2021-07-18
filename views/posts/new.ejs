@@ -4,17 +4,17 @@
     <div class="column is-half">
       <div class="box">
         <h1 class="title">New Post</h1>
-        <form action="/posts" method="POST">
+        <form action="/posts" method="POST" class="validate-form">
           <div class="field">
             <label for="title">Title:</label>
             <div class="control">
-              <input type="text" name="post[title]" id="title" class="input" />
+              <input type="text" name="post[title]" id="title" class="input" required />
             </div>
           </div>
           <div class="field">
             <label for="image">Image URL: </label>
             <div class="control">
-              <input type="text" name="post[image]" id="image" class="input" />
+              <input type="text" name="post[image]" id="image" class="input" required />
             </div>
           </div>
           <div class="field">
@@ -26,6 +26,7 @@
                 cols="30"
                 rows="3"
                 class="textarea"
+                required
               ></textarea>
             </div>
           </div>

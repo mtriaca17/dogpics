@@ -4,7 +4,7 @@
     <div class="column is-half">
       <div class="box">
         <h1 class="title">Editing a Post</h1>
-        <form action="/posts/<%= post._id %>?_method=PUT" method="POST">
+        <form action="/posts/<%= post._id %>?_method=PUT" method="POST" class="validate-form">
           <div class="field">
             <label for="title">Title:</label>
             <div class="control">
@@ -14,6 +14,7 @@
                 id="title"
                 value="<%= post.title %>"
                 class="input"
+                required
               />
             </div>
           </div>
@@ -26,6 +27,7 @@
                 id="image"
                 value="<%= post.image %>"
                 class="input"
+                required
               />
             </div>
           </div>
@@ -38,6 +40,7 @@
                 cols="30"
                 rows="3"
                 class="textarea"
+                required
               >
 <%= post.description %></textarea
               >
