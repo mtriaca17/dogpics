@@ -16,6 +16,7 @@ const User = require('./models/user');
 const catchAsync = require('./utils/catchAsync');
 const AppError = require('./utils/AppError');
 const MongoStore = require('connect-mongo');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const { postSchema, commentSchema } = require('./schemaValidations');
 
@@ -40,6 +41,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(mongoSanitize());
 
 //session store
 const secret = process.env.SECRET || 'notthebestsecret';

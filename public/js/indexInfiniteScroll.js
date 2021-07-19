@@ -39,7 +39,7 @@ function appendToPage(data) {
 }
 
 window.addEventListener('scroll', e => {
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2) {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2 && readyForRequest) {
     readyForRequest = false;
     getData();
   }
