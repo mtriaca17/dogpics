@@ -15,17 +15,20 @@ const User = require('./models/user');
 
 const catchAsync = require('./utils/catchAsync');
 const AppError = require('./utils/AppError');
+const MongoStore = require('connect-mongo');
 
 const { postSchema, commentSchema } = require('./schemaValidations');
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/dogPics';
 mongoose
-  .connect('mongodb://localhost:27017/dogPics', {
+  .connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   })
   .then(console.log('Database Connected!'))
   .catch(e => console.log(e));
-mongoose.set('useFindAndModify', false);
 
 const app = express();
 
@@ -38,9 +41,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//session store
+const secret = process.env.SECRET || 'notthebestsecret';
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: secret,
+  },
+});
+
 //session
 const sessionConfig = {
-  secret: 'thisisnotagoodsecret',
+  store,
+  name: 'session',
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
