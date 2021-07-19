@@ -6,7 +6,9 @@ const Post = require('../models/post');
 const User = require('../models/user');
 const passport = require('passport');
 
-router.get('/register', (req, res) => {
+const { isAlreadyLoggedIn } = require('../middleware');
+
+router.get('/register', isAlreadyLoggedIn, (req, res) => {
   res.render('users/register');
 });
 
@@ -41,7 +43,7 @@ router.get(
   })
 );
 
-router.get('/login', (req, res) => {
+router.get('/login', isAlreadyLoggedIn, (req, res) => {
   res.render('users/login');
 });
 

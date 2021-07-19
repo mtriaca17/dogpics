@@ -3,17 +3,19 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const session = require('express-session');
 const flash = require('connect-flash');
 
 const passport = require('passport');
 const localStrategy = require('passport-local');
 
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+const mongoSanitize = require('express-mongo-sanitize');
+
 const User = require('./models/user');
 
 const AppError = require('./utils/AppError');
-const MongoStore = require('connect-mongo');
-const mongoSanitize = require('express-mongo-sanitize');
 
 const postRoutes = require('./routes/posts');
 const commentRoutes = require('./routes/comments');
@@ -99,7 +101,12 @@ app.all('*', (req, res, next) => {
 
 //error middleware
 app.use((err, req, res, next) => {
-  const { statusCode = 500 } = err;
+  let { statusCode = 500 } = err;
+  if (err.name === 'CastError') {
+    err.message = "Sorry, that page couldn't be found";
+    err.statusCode = 404;
+    return res.status(404).render('error', { err });
+  }
   if (!err.message) err.message = 'Oh no, something went wrong';
   res.status(statusCode).render('error', { err });
 });

@@ -55,4 +55,19 @@ const isCommentAuthor = catchAsync(async (req, res, next) => {
   next();
 });
 
-module.exports = { isLoggedIn, isPostAuthor, isCommentAuthor, validateComment, validatePost };
+const isAlreadyLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    req.flash('success', 'You signed in already!');
+    return res.redirect('/posts');
+  }
+  next();
+};
+
+module.exports = {
+  isLoggedIn,
+  isPostAuthor,
+  isCommentAuthor,
+  validateComment,
+  validatePost,
+  isAlreadyLoggedIn,
+};
