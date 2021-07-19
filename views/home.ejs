@@ -18,9 +18,16 @@
               <h1 class="title">dogpics</h1>
               <h2 class="subtitle">pretty much just pictures of dogs</h2>
               <div class="buttons">
-                <a href="/register" class="button">Sign up</a>
-                <a href="/login" class="button">Login</a>
-                <a href="/posts" class="button">View Dog Pics</a>
+                <% if(!currentUser) {%>
+                <a href="/register" class="button home-btn">Sign up</a>
+                <a href="/login" class="button home-btn">Login</a>
+                <% } %>
+                <a href="/posts" class="button home-btn">View Dog Pics</a>
+                <% if(currentUser) { %>
+                <a href="/users/<%= currentUser._id %>" class="button home-btn"
+                  >View Your Profile</a
+                >
+                <% } %>
               </div>
             </div>
             <div class="column is-5">

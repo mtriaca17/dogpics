@@ -2,7 +2,7 @@
 <div class="container my-5">
   <div class="columns is-centered is-marginless">
     <div class="column is-three-fifths">
-      <div class="card has-text-centered">
+      <div class="card has-text-centered main-show-card">
         <div class="card-content">
           <p class="title"><%= post.title %></p>
           <p class="subtitle">
@@ -18,11 +18,9 @@
         <div class="card-content">
           <% if(currentUser && post.author.equals(currentUser._id)) { %>
           <div class="field is-grouped is-justify-content-center">
-            <a href="/posts/<%= post._id %>/edit" class="button is-primary is-outlined mr-3"
-              >Edit Post</a
-            >
+            <a href="/posts/<%= post._id %>/edit" class="button is-primary mr-3">Edit Post</a>
             <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-              <button class="button is-danger is-outlined">Delete Post</button>
+              <button class="button is-danger">Delete Post</button>
             </form>
           </div>
 
@@ -32,7 +30,7 @@
     </div>
     <div class="column">
       <% if(currentUser) { %>
-      <div class="box">
+      <div class="box comment-form-box">
         <form action="/posts/<%= post._id %>/comments" method="POST" class="form mb-3">
           <div class="field">
             <label for="comment">Comment: </label>
@@ -46,12 +44,12 @@
               ></textarea>
             </div>
           </div>
-          <button class="button is-info is-outlined">Submit Comment</button>
+          <button class="button is-info">Submit Comment</button>
         </form>
       </div>
       <% } %>
 
-      <div class="box">
+      <div class="box comment-parent-box">
         <p class="is-size-5">Comments:</p>
         <% for(let comment of post.comments ) { %>
         <div class="box is-shadowless comment-box">

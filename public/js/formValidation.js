@@ -21,25 +21,25 @@
 //     );
 //   });
 // })();
-(function () {
-  const newForm = document.querySelector('.validate-form-new');
-  const titleInput = document.querySelector('.title-input');
-  const urlInput = document.querySelector('.url-input');
-  const descriptionInput = document.querySelector('.description-input');
-  console.log(newForm);
-  newForm.addEventListener(
-    'submit',
-    e => {
-      if (!form.checkValidity()) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      titleInput.classList.add('is-danger');
-      urlInput.classList.add('is-danger');
-      descriptionInput.classList.add('is-danger');
+// (function () {
+//   const newForm = document.querySelector('.validate-form-new');
+//   const titleInput = document.querySelector('.title-input');
+//   const urlInput = document.querySelector('.url-input');
+//   const descriptionInput = document.querySelector('.description-input');
+//   console.log(newForm);
+//   newForm.addEventListener(
+//     'submit',
+//     e => {
+//       if (!form.checkValidity()) {
+//         e.preventDefault();
+//         e.stopPropagation();
+//       }
+//       titleInput.classList.add('is-danger');
+//       urlInput.classList.add('is-danger');
+//       descriptionInput.classList.add('is-danger');
 
-      document.querySelector('.validation-text').style.display = 'visible';
-    },
-    false
-  );
-})();
+//       document.querySelector('.validation-text').style.display = 'visible';
+//     },
+//     false
+//   );
+// })();

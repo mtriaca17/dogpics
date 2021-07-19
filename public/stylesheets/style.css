@@ -1,16 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-html {
-  height: 100%;
+:root {
+  --color-turqoise: #36d6e7;
+  --color-blue-gray: #5d6c89;
+  --color-tangerine: #feb06a;
+  --color-cream: #fbf6f3;
 }
+
 body {
   min-height: 100vh;
   font-family: 'Lato', sans-serif;
+  background-color: var(--color-cream);
+  /* background-image: radial-gradient(var(--color-turqoise), var(--color-blue-gray)); */
 }
+
+.main-nav {
+  /* background-color: var(--color-tangerine); */
+  background-color: var(--color-turqoise);
+}
+
+.footer {
+  background-color: var(--color-turqoise);
+  /* background-color: var(--color-tangerine); */
+  /* color: var(--color-cream); */
+}
+
+.button.is-primary.btn-signup {
+  background-color: var(--color-blue-gray);
+}
+
 .comment-box {
   border: 1px solid #c1c1c1;
 }
 
+.button.btn-form {
+  background-color: var(--color-turqoise);
+}
+
+.index-box {
+  /* border: 1px solid var(--color-blue-gray); */
+  background-color: var(--color-tangerine);
+}
+.main-show-card {
+  background-color: var(--color-tangerine);
+}
+
+.comment-form-box,
+.comment-parent-box {
+  background-color: var(--color-tangerine);
+}
 /* .footer {
   position: absolute;
   bottom: 0;

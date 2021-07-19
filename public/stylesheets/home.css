@@ -1,0 +1,20 @@
+:root {
+  --color-turqoise: #36d6e7;
+  --color-blue-gray: #5d6c89;
+  --color-tangerine: #feb06a;
+  --color-cream: #fbf6f3;
+}
+
+body {
+  background-image: radial-gradient(#36d6e7, #5d6c89);
+}
+
+.title,
+.subtitle {
+  color: var(--color-cream);
+}
+
+.home-btn {
+  background-color: var(--color-tangerine);
+  color: var(--color-cream);
+}
