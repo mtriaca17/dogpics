@@ -24,22 +24,23 @@
     </div>
 
     <div class="navbar-end">
-      <div class="navbar-item has-text-dark">
-        <% if(!currentUser) {%>
-        <div class="buttons">
-          <a href="/register" class="button is-primary btn-signup">
-            <strong>Sign up</strong>
-          </a>
-          <a href="/login" class="button is-light"> Log in </a>
-        </div>
-        <% } else { %>
-        <p class="navbar-item is-hidden-mobile has-text-dark">Hello <%= currentUser.username %>!</p>
-        <div class="buttons">
-          <a href="/users/<%= currentUser._id %>" class="button is-light">View your profile</a>
-          <a href="/logout" class="button is-light"> Log Out </a>
-        </div>
-        <% } %>
+      <% if(!currentUser) {%>
+      <div class="buttons mr-3">
+        <a href="/register" class="button is-primary btn-signup">
+          <strong>Sign up</strong>
+        </a>
+        <a href="/login" class="button is-light"> Log in </a>
       </div>
+      <% } else { %>
+      <p class="navbar-item is-hidden-mobile has-text-dark">Hello <%= currentUser.username %>!</p>
+      <a href="/users/<%= currentUser._id %>" class="navbar-item has-text-dark mr-3">
+        View your profile
+      </a>
+
+      <div class="buttons mr-3">
+        <a href="/logout" class="button is-light"> Log Out </a>
+      </div>
+      <% } %>
     </div>
   </div>
 </nav>

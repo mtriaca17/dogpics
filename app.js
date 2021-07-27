@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -21,7 +25,8 @@ const postRoutes = require('./routes/posts');
 const commentRoutes = require('./routes/comments');
 const userRoutes = require('./routes/users');
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/dogPics';
+const dbUrl = process.env.DB_URL;
+// const dbUrl = 'mongodb://localhost:27017/dogPics';
 mongoose
   .connect(dbUrl, {
     useNewUrlParser: true,
