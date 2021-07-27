@@ -1,2 +1,2 @@
 # dogpics
-practice crud app made with express and mongo
+practice crud app made with node, express and mongo
