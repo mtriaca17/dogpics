@@ -27,7 +27,7 @@ function appendToPage(data) {
         <img src="${post.image}" alt="" />
       </figure>
     </a>
-    <a href="/posts/${post._id} class="card-footer-item">View Full Post!</a>
+    <a href="/posts/${post._id}" class="card-footer-item">View Full Post!</a>
   </div>`;
     const newPost = document.createElement('div');
     newPost.classList.add('column', 'block', 'is-one-third');
